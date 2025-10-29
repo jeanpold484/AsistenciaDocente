@@ -3,17 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AccountController;
-
-use App\Http\Controllers\Admin\HomeController as AdminHome;
-use App\Http\Controllers\Docente\HomeController as DocenteHome;
-
-use App\Http\Controllers\PermisoController;
-use App\Http\Controllers\RolController;
 use App\Http\Controllers\Admin\UsuarioController;
-use App\Http\Controllers\Admin\PersonaController;
-use App\Http\Controllers\RolPermisoController;
-use App\Http\Controllers\Admin\DocenteController;
-use App\Http\Controllers\Admin\AdministrativoController;
 
 // Auth
 
@@ -81,12 +71,6 @@ Route::middleware(['auth', 'role:coordinador'])
         // GRUPOS (protegido por permiso)
         Route::middleware('permiso:gestionar-grupos')->group(function () {
             Route::resource('grupos', GrupoController::class)->except(['show']);
-            Route::get('grupos',                [GrupoController::class, 'index'])->name('grupos.index');
-            Route::get('grupos/crear',          [GrupoController::class, 'create'])->name('grupos.create');
-            Route::post('grupos',               [GrupoController::class, 'store'])->name('grupos.store');
-            Route::get('grupos/{grupo}/editar', [GrupoController::class, 'edit'])->name('grupos.edit');
-            Route::put('grupos/{grupo}',        [GrupoController::class, 'update'])->name('grupos.update');
-            Route::delete('/grupos/{grupo}', [GrupoController::class, 'destroy'])->name('grupos.destroy');
         });
 
         Route::resource('materias', MateriaController::class)->except(['show']);
